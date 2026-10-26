@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 120" role="img" aria-labelledby="title">
+  <title id="title">yahtech GT</title>
+  <defs>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Sora:wght@500;700;800&amp;display=swap");
+      .w { font-family: Sora, "Segoe UI", Arial, sans-serif; }
+    </style>
+  </defs>
+  <g>
+    <rect x="4" y="4" width="112" height="112" rx="30" fill="#0B2A4A"/>
+    <path d="M36 34 L60 60 L84 34 M60 60 L60 90" fill="none" stroke="#FFFFFF" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="36" cy="34" r="9" fill="#FFFFFF"/>
+    <circle cx="60" cy="90" r="9" fill="#FFFFFF"/>
+    <circle cx="84" cy="34" r="11" fill="#22D3EE"/>
+    <circle cx="84" cy="34" r="4.5" fill="#0B2A4A"/>
+  </g>
+  <text class="w" x="140" y="80" font-size="56" letter-spacing="-1.5"><tspan font-weight="800" fill="#0B2A4A">yah</tspan><tspan font-weight="500" fill="#0A7EA4">tech</tspan></text>
+  <rect x="424" y="43" width="56" height="34" rx="9" fill="#0B2A4A"/>
+  <text class="w" x="452" y="66.5" font-size="18" font-weight="700" fill="#22D3EE" text-anchor="middle" letter-spacing="1">GT</text>
+</svg>

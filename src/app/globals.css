@@ -1,26 +1,558 @@
 @import "tailwindcss";
 
+@theme {
+  --color-navy: #0b2a4a;
+  --color-navy-2: #113a63;
+  --color-navy-3: #174876;
+  --color-accent: #0a7ea4;
+  /* Variante del acento para texto pequeño sobre fondo claro (contraste AA). */
+  --color-accent-ink: #086f91;
+  --color-cyan: #22d3ee;
+  --color-ground: #f5f8fc;
+  --color-ground-2: #e9eff7;
+  --color-ink-soft: #3a5571;
+  --color-mist: #b9cbdd;
+
+  --font-sans: var(--font-sora), "Segoe UI", system-ui, sans-serif;
+
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  color-scheme: light;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-ground);
+  color: var(--color-navy);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: var(--color-cyan);
+  color: var(--color-navy);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* Las secciones reciben el foco al navegar desde el menú; no necesitan contorno. */
+[tabindex="-1"]:focus {
+  outline: none;
+}
+
+.on-dark :focus-visible {
+  outline-color: var(--color-cyan);
+}
+
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+/* Botones: forma de píldora, respuesta inmediata al presionar. */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.625rem;
+  min-height: 3.25rem;
+  padding: 0 1.5rem;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 1rem;
+  white-space: nowrap;
+  transition:
+    transform 160ms var(--ease-out),
+    background-color 200ms ease,
+    color 200ms ease;
+}
+
+.btn:active {
+  transform: scale(0.97);
+}
+
+.btn-primary {
+  background: var(--color-navy);
+  color: #fff;
+}
+
+.btn-secondary {
+  background: var(--color-ground-2);
+  color: var(--color-navy);
+}
+
+.btn-cyan {
+  background: var(--color-cyan);
+  color: var(--color-navy);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .btn-primary:hover {
+    background: var(--color-navy-3);
+  }
+  .btn-secondary:hover {
+    background: #dce6f2;
+  }
+  .btn-cyan:hover {
+    background: #67e8f9;
+  }
+  .btn .btn-arrow {
+    transition: transform 200ms var(--ease-out);
+  }
+  .btn:hover .btn-arrow {
+    transform: translateX(3px);
+  }
+}
+
+/* Enlaces de navegación con subrayado que crece desde la izquierda. */
+.nav-link {
+  position: relative;
+  padding: 0.5rem 0;
+  font-weight: 500;
+}
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0.2rem;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--color-accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 240ms var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .nav-link:hover::after {
+    transform: scaleX(1);
+  }
+}
+
+/* Entradas al hacer scroll. Solo se ocultan si hay JavaScript,
+   así el contenido nunca queda invisible. */
+.js [data-reveal] {
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity 700ms var(--ease-out),
+    transform 900ms var(--ease-out);
+  transition-delay: var(--d, 0ms);
+}
+
+.js [data-reveal="scale"] {
+  transform: translateY(24px) scale(0.98);
+}
+
+.js [data-reveal].is-in {
+  opacity: 1;
+  transform: none;
+}
+
+/* Vista previa del hero: cambio de contenido con un leve desenfoque. */
+.preview-pane {
+  transition:
+    opacity 260ms var(--ease-out),
+    filter 260ms var(--ease-out),
+    transform 320ms var(--ease-out);
+}
+
+.preview-pane[data-active="false"] {
+  opacity: 0;
+  filter: blur(4px);
+  transform: translateY(6px);
+  pointer-events: none;
+}
+
+/* Menú móvil. */
+.mobile-menu {
+  transition:
+    opacity 220ms var(--ease-out),
+    transform 260ms var(--ease-out),
+    visibility 0s linear 260ms;
+}
+
+.mobile-menu[data-open="false"] {
+  opacity: 0;
+  transform: translateY(-8px);
+  visibility: hidden;
+}
+
+.mobile-menu[data-open="true"] {
+  transition-delay: 0s;
+}
+
+.burger-line {
+  transition: transform 260ms var(--ease-out), opacity 160ms ease;
+  transform-origin: center;
+}
+
+[aria-expanded="true"] .burger-line:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+[aria-expanded="true"] .burger-line:nth-child(2) {
+  opacity: 0;
+}
+
+[aria-expanded="true"] .burger-line:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* Tarjetas de servicio: leve elevación al pasar el puntero. */
+.service-card {
+  transition:
+    transform 300ms var(--ease-out),
+    background-color 300ms ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .service-card:hover {
+    transform: translateY(-4px);
+    background: var(--color-navy-3);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .js [data-reveal],
+  .js [data-reveal="scale"] {
+    transform: none;
+    transition: opacity 300ms ease;
+  }
+  .preview-pane,
+  .preview-pane[data-active="false"] {
+    transform: none;
+    filter: none;
+  }
+  .service-card:hover,
+  .btn:active {
+    transform: none;
+  }
+}
+
+/* Entrada del hero al cargar: solo CSS, no espera a JavaScript. */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+}
+
+[data-rise] {
+  animation: rise 900ms var(--ease-out) both;
+  animation-delay: var(--d, 0ms);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  @keyframes rise {
+    from {
+      opacity: 0;
+    }
+  }
+  [data-rise] {
+    animation-duration: 400ms;
+  }
+}
+
+/* Botón flotante de WhatsApp. */
+.wa-float {
+  animation: wa-in 600ms var(--ease-out) 900ms both;
+  transition: transform 200ms var(--ease-out), background-color 200ms ease;
+}
+
+.wa-float:active {
+  transform: scale(0.94);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .wa-float:hover {
+    transform: translateY(-3px) scale(1.04);
+    background-color: #1ebe5b;
+  }
+}
+
+@keyframes wa-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.9);
+  }
+}
+
+/* Acordeón de preguntas frecuentes. */
+.faq-panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 320ms var(--ease-out);
+}
+
+.faq-panel[data-open="true"] {
+  grid-template-rows: 1fr;
+}
+
+.faq-icon {
+  transition: transform 260ms var(--ease-out);
+}
+
+[aria-expanded="true"] .faq-icon {
+  transform: rotate(45deg);
+}
+
+/* Portafolio estilo galería de plantillas. */
+.hatch {
+  background-image: repeating-linear-gradient(
+    -45deg,
+    rgb(255 255 255 / 0.07) 0 1px,
+    transparent 1px 8px
+  );
+}
+
+.showcase-tile .tile-shot,
+.showcase-tile .tile-phone {
+  transition: transform 500ms var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .showcase-tile:hover .tile-shot {
+    transform: translateY(-6px);
+  }
+  .showcase-tile:hover .tile-phone {
+    transform: translateY(-12px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wa-float {
+    animation: none;
+  }
+  .wa-float:hover,
+  .showcase-tile:hover .tile-shot,
+  .showcase-tile:hover .tile-phone {
+    transform: none;
+  }
+  .faq-panel,
+  .faq-icon {
+    transition: none;
+  }
+}
+
+/* Camino de "Cómo trabajamos": se recorre al entrar en pantalla. */
+.step-circle {
+  transition:
+    background-color 400ms ease,
+    color 400ms ease,
+    box-shadow 400ms ease,
+    transform 500ms var(--ease-out);
+}
+
+.step-item[data-on="true"] .step-circle {
+  animation: step-pop 500ms var(--ease-out);
+  box-shadow: 0 0 0 6px rgb(34 211 238 / 0.18);
+}
+
+@keyframes step-pop {
+  40% {
+    transform: scale(1.12);
+  }
+}
+
+.path-dot {
+  transition: opacity 300ms ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .step-item[data-on="true"] .step-circle {
+    animation: none;
+  }
+}
+
+/* "Nos adaptamos a todo": cambio de pantallas dentro del dispositivo. */
+.device-screen {
+  transition:
+    transform 600ms var(--ease-out),
+    opacity 600ms var(--ease-out),
+    filter 600ms var(--ease-out);
+}
+
+.device-screen[data-state="active"] {
+  z-index: 2;
+  transform: none;
+}
+
+.device-screen[data-state="previous"] {
+  z-index: 1;
+  transform: scale(0.86);
+  opacity: 0.4;
+  filter: blur(4px);
+}
+
+.device-screen[data-state="next"] {
+  z-index: 3;
+  transform: translateY(100%);
+  transition: none;
+}
+
+.device-in {
+  animation: device-in 600ms var(--ease-out) both;
+}
+
+@keyframes device-in {
+  from {
+    opacity: 0;
+    transform: translateY(24px) scale(0.96);
+  }
+}
+
+.rings {
+  animation: spin 80s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .device-screen,
+  .device-screen[data-state] {
+    transition: opacity 300ms ease;
+    transform: none;
+    filter: none;
+  }
+  .device-screen[data-state="previous"],
+  .device-screen[data-state="next"] {
+    opacity: 0;
+  }
+  .device-in,
+  .rings {
+    animation: none;
+  }
+}
+
+/* Página 404: el nodo celeste flota separado del símbolo. */
+.lost-node {
+  animation: float 3.2s ease-in-out infinite;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+@keyframes float {
+  50% {
+    transform: translate(-3px, -6px) rotate(-6deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lost-node {
+    animation: none;
+  }
+}
+
+/* Marca de fondo en "Sobre yahtech" y en el cierre: gira muy despacio. */
+.about-mark,
+.closing-mark {
+  animation: drift-mark 40s ease-in-out infinite alternate;
+  transform-origin: 70% 30%;
+}
+
+@keyframes drift-mark {
+  to {
+    transform: rotate(8deg) translateY(-12px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .about-mark,
+  .closing-mark {
+    animation: none;
+  }
+}
+
+/* Demo de chatbot: burbujas y puntos de "escribiendo". */
+.chat-bubble {
+  animation: bubble-in 280ms var(--ease-out) both;
+  transform-origin: bottom left;
+}
+
+.chat-bubble.self-end {
+  transform-origin: bottom right;
+}
+
+@keyframes bubble-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px) scale(0.96);
+  }
+}
+
+.typing-dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  margin: 0 2px;
+  border-radius: 999px;
+  background: var(--color-ink-soft);
+  animation: typing 1s ease-in-out infinite;
+}
+
+.typing-dot:nth-child(2) {
+  animation-delay: 150ms;
+}
+
+.typing-dot:nth-child(3) {
+  animation-delay: 300ms;
+}
+
+@keyframes typing {
+  0%,
+  60%,
+  100% {
+    opacity: 0.35;
+    transform: translateY(0);
+  }
+  30% {
+    opacity: 1;
+    transform: translateY(-3px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chat-bubble,
+  .typing-dot {
+    animation: none;
+  }
+}
+
+/* En pantallas bajas, Servicios recorta su relleno superior para que las tres
+   tarjetas y sus botones entren completos al llegar desde el menú. */
+@media (min-width: 1024px) and (max-height: 880px) {
+  #servicios {
+    padding-top: 3.5rem;
+  }
+  #servicios > div > ul {
+    margin-top: 2rem;
+  }
 }
