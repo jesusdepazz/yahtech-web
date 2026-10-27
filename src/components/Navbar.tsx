@@ -34,7 +34,7 @@ export function Navbar() {
         buttonRef.current?.focus();
       }
     };
-    const desktop = window.matchMedia("(min-width: 1024px)");
+    const desktop = window.matchMedia("(min-width: 1280px)");
     const onResize = () => desktop.matches && setOpen(false);
     window.addEventListener("keydown", onKey);
     desktop.addEventListener("change", onResize);
@@ -58,7 +58,7 @@ export function Navbar() {
           <Logo />
         </a>
 
-        <div className="hidden items-center gap-5 lg:flex xl:gap-7">
+        <div className="hidden items-center gap-5 xl:flex 2xl:gap-7">
           {links.map((link) => (
             <a key={link.id} {...sectionLink(link.id)} className="nav-link text-navy">
               {link.label}
@@ -78,7 +78,7 @@ export function Navbar() {
         <button
           ref={buttonRef}
           type="button"
-          className="-mr-2 flex size-11 flex-col items-center justify-center gap-[5px] rounded-full lg:hidden"
+          className="-mr-2 flex size-11 flex-col items-center justify-center gap-[5px] rounded-full xl:hidden"
           aria-expanded={open}
           aria-controls="menu-movil"
           aria-label={open ? "Cerrar menú" : "Abrir menú"}
@@ -93,7 +93,7 @@ export function Navbar() {
       <div
         id="menu-movil"
         data-open={open}
-        className="mobile-menu absolute inset-x-0 top-full bg-ground px-4 pb-6 shadow-[0_18px_30px_-18px_rgba(11,42,74,0.3)] sm:px-6 lg:hidden"
+        className="mobile-menu absolute inset-x-0 top-full bg-ground px-4 pb-6 shadow-[0_18px_30px_-18px_rgba(11,42,74,0.3)] sm:px-6 xl:hidden"
         inert={!open}
       >
         <ul className="flex flex-col">

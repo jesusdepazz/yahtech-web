@@ -8,7 +8,7 @@ Hecho con Next.js 16 (exportación estática), React 19, Tailwind CSS 4 y la fue
 
 | Qué | Archivo |
 | --- | --- |
-| Número de WhatsApp, Instagram, URL del sitio | `src/lib/site.ts` (`whatsapp: "502XXXXXXXX"`) |
+| Número de WhatsApp, Instagram, URL del sitio | `src/lib/site.ts` (`whatsapp: "50242700729"`) |
 | Precios, descripciones y lo que incluye cada servicio | `src/lib/site.ts` (lista `services`) |
 | Mensajes predefinidos de WhatsApp | `src/lib/site.ts` (`generalMessage` y `message` de cada servicio) |
 | Preguntas frecuentes, pasos de "Cómo trabajamos", demos del portafolio | `src/lib/site.ts` (`faqs`, `steps`, `demos`) |
@@ -73,7 +73,7 @@ La página ya está lista para usar un dominio propio (por ejemplo `yahtech.com.
    | AAAA | @ | 2606:50c0:8001::153 |
    | AAAA | @ | 2606:50c0:8002::153 |
    | AAAA | @ | 2606:50c0:8003::153 |
-   | CNAME | www | yahtechgt.github.io |
+   | CNAME | www | jesusdepazz.github.io (tu usuario de GitHub + `.github.io`) |
 
    Los registros AAAA son opcionales; los A sí son necesarios.
 3. **Conectá el dominio al repositorio**: en el repositorio, **Settings → Pages → Custom domain**, escribí el dominio sin `www` (por ejemplo `yahtech.com.gt`) y guardá. GitHub revisa el DNS; puede tardar desde minutos hasta 24 horas.

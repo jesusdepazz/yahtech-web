@@ -9,7 +9,7 @@ export const site = {
   title: "yahtech | Páginas web modernas para negocios en Guatemala",
   description:
     "Diseño y desarrollo de sitios elegantes, funcionales y a la medida de tu marca. Páginas informativas, landing pages y tiendas en línea para negocios en Guatemala.",
-  whatsapp: "502XXXXXXXX",
+  whatsapp: "50242700729",
   instagram: "yahtechgt",
   location: "Guatemala",
 };
